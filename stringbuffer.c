@@ -40,7 +40,7 @@ void stringbuffer_append_fi(stringbuffer* sb, const char* fmt, const int value) 
 }
 
 void stringbuffer_append_ti(stringbuffer* sb, unsigned int value) {
-    unsigned int seconds = value % 60; value /= 60;
+    /* unsigned int seconds unused  */ value /= 60;
     unsigned int minutes = value % 60; value /= 60;
     unsigned int hours   = value % 24; value /= 24;
     unsigned int days    = value;
