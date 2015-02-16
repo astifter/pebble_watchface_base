@@ -1,6 +1,5 @@
 #include <pebble.h>
 #include "storage.h"
-#include "stringbuffer.h"
 #include "logging_helper.h"
 
 // Indices to storage and data to access copies of stored values.

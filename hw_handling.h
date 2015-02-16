@@ -1,8 +1,5 @@
 #pragma once
 
-#include <pebble.h>
-#include "stringbuffer.h"
-
 // The type of function to register as callback when hardware events have been
 // processed.
 typedef void (*hardware_changed_callback)(void);
