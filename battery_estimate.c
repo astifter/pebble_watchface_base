@@ -104,12 +104,21 @@ void battery_estimate_update(BatteryChargeState current) {
     }
     if (needspersistence) storage_persist();
 
+    unsigned int remaining = be->previous_state.charge_percent / 10;
     unsigned int sum = 0;
     for (int i = 0; i < battery_estimate_data_average_data_num; i++) {
         sum += be->averate_data[i];
     }
-    unsigned int average = sum / battery_estimate_data_average_data_num;
-    unsigned int remaining = be->previous_state.charge_percent / 10;
+    unsigned int average;
+    if (storage.last_full_timestamp != -1 && remaining <= 9) {
+        time_t time_since_last_charge = time(NULL) - storage.last_full_timestamp; 
+        int weight = 10 - remaining;
+        LOG_EXT(LOG_BATTERY, "using time since last charge %ld with weight %d", time_since_last_charge, weight);
+        average = (sum + time_since_last_charge) / (battery_estimate_data_average_data_num + weight);
+    } else {
+        LOG_EXT(LOG_BATTERY, "not using last charged time");
+        average = sum / battery_estimate_data_average_data_num;
+    }
     battery_estimate_secs = remaining * average;
 
     battery_estimate_update_string();
