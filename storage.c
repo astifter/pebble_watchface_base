@@ -1,6 +1,7 @@
 #include <pebble.h>
 #include "storage.h"
 #include "logging_helper.h"
+#include "stringbuffer.h"
 
 // Indices to storage and data to access copies of stored values.
 enum {
@@ -22,7 +23,10 @@ static void app_log_storage_log(unsigned int how) {
     LOG_EXT(how, "storage.battery_estimate.previous_state.is_plugged: %d", be->previous_state.is_plugged);
     LOG_EXT(how, "storage.battery_estimate.average_data_write_head: %d", be->average_data_write_head);
     for (int i = 0; i < battery_estimate_data_average_data_num; i++) {
-        LOG_EXT(how, "storage.battery_estimate.averate_data[%d]: %ld", i, be->averate_data[i]);
+        stringbuffer time;
+        stringbuffer_init(&time);
+        stringbuffer_append_ti(&time, be->averate_data[i]);
+        LOG_EXT(how, "storage.battery_estimate.averate_data[%d]: %s", i, time.retval);
     }
     LOG_EXT(how, "storage.last_full_timestamp: %ld", storage.last_full_timestamp);
     LOG_EXT(how, "storage.battery_display: %d", storage.battery_display);
