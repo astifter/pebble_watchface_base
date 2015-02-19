@@ -89,6 +89,10 @@ void battery_estimate_update(BatteryChargeState current) {
         LOG(LOG_BATTERY, "recording timestamp of full charge")
         storage.last_full_timestamp = time(NULL);
         needspersistence = true;
+    } else if (current.is_plugged) {
+        LOG(LOG_BATTERY, "invalidating timestamp of full charge")
+        storage.last_full_timestamp = -1;
+        needspersistence = true;
     }
 
     // when the state has changed, record new state and timestamp.
