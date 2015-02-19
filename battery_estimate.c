@@ -116,7 +116,7 @@ void battery_estimate_update(BatteryChargeState current) {
         LOG_EXT(LOG_BATTERY, "using time since last charge %ld with weight %d", time_since_last_charge, weight);
         average = (sum + time_since_last_charge) / (battery_estimate_data_average_data_num + weight);
     } else {
-        LOG_EXT(LOG_BATTERY, "not using last charged time");
+        LOG(LOG_BATTERY, "not using last charged time");
         average = sum / battery_estimate_data_average_data_num;
     }
     battery_estimate_secs = remaining * average;
