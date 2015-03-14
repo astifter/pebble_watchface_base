@@ -67,8 +67,11 @@ void battery_estimate_update(BatteryChargeState current) {
         LOG(LOG_BATTERY, "not updating estimate, drop is not 10%");
         do_estimate_update = false;
     }
+    // make sure that the last timestamp is not older than three days, this
+    // would implicate that the watchface was not active for a longer period of
+    // time.
     time_t current_timestamp = time(NULL);
-    if (current_timestamp - 86400 >= be->previous_state_timestamp) {
+    if (current_timestamp - 259200 >= be->previous_state_timestamp) {
         LOG(LOG_BATTERY, "not updating estimate, pervious state is too old")
         do_estimate_update = false;
     }
