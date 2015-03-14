@@ -1,19 +1,20 @@
 #if LOG_TESTING
 #include <stdio.h>
 #endif
+#include "quicksort.h"
 
 int choose_pivot(int first, int last) {
     return (first + last) / 2;
 }
 
-void swap(int* data, int first, int second) {
+void swap(time_t* data, int first, int second) {
     if (first == second) return;
     int temp = data[first];
     data[first] = data[second];
     data[second] = temp;
 }
 
-int partition(int* data, int first, int last) {
+int partition(time_t* data, int first, int last) {
     int pivot_index = choose_pivot(first, last);
     int pivot_value = data[pivot_index];
     swap(data, pivot_index, last);
@@ -28,7 +29,7 @@ int partition(int* data, int first, int last) {
     return store_index;
 }
 
-void quicksort(int* data, int first, int last) {
+void quicksort(time_t* data, int first, int last) {
     if (first < last) {
 //#if LOG_TESTING
 //        printf("got: [%d,%d]", first, last);
