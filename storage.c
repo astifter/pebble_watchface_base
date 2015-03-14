@@ -22,12 +22,7 @@ static void app_log_storage_log(unsigned int how) {
     LOG_EXT(how, "storage.battery_estimate.previous_state.is_charging: %d", be->previous_state.is_charging);
     LOG_EXT(how, "storage.battery_estimate.previous_state.is_plugged: %d", be->previous_state.is_plugged);
     LOG_EXT(how, "storage.battery_estimate.average_data_write_head: %d", be->average_data_write_head);
-    for (int i = 0; i < battery_estimate_data_average_data_num; i++) {
-        stringbuffer time;
-        stringbuffer_init(&time);
-        stringbuffer_append_ti(&time, be->averate_data[i]);
-        LOG_EXT(how, "storage.battery_estimate.averate_data[%d]: %s", i, time.retval);
-    }
+    battery_estimate_data_log(be->averate_data, battery_estimate_data_average_data_num, how);
     LOG_EXT(how, "storage.last_full_timestamp: %ld", storage.last_full_timestamp);
     LOG_EXT(how, "storage.battery_display: %d", storage.battery_display);
 }

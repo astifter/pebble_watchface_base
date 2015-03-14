@@ -14,3 +14,5 @@ typedef struct {
 } battery_estimate_data;
 
 extern const battery_estimate_data battery_estimate_data_init;
+
+void battery_estimate_data_log(time_t* data, size_t size, unsigned int how);
