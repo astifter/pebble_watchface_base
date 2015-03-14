@@ -3,7 +3,7 @@
 #include <pebble.h>
 
 enum {
-    battery_estimate_data_average_data_num = 10,
+    battery_estimate_data_average_data_num = 11,
 };
 
 typedef struct {

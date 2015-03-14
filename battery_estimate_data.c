@@ -6,7 +6,7 @@ const battery_estimate_data battery_estimate_data_init = {
     0,
     { 255, false, false },
     battery_estimate_data_average_data_num-1,
-    { 43200, 43200, 43200, 43200, 43200, 43200, 43200, 43200, 43200, 43200 }
+    { 43052, 43082, 43112, 43142, 43172, 43202, 43232, 43262, 43292, 43322, 43352 }
 };
 
 void battery_estimate_data_log(time_t* data, size_t size, unsigned int how) {
