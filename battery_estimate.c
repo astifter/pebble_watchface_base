@@ -57,6 +57,12 @@ void battery_estimate_update(BatteryChargeState current) {
         LOG(LOG_BATTERY, "not updating estimate, was or is plugged");
         do_estimate_update = false;
     }
+    // make sure its an honest 10% drop. since the drop from 100% to 90%
+    // happens quite fast, exclude it.
+    if (current.charge_percent == 90) {
+        LOG(LOG_BATTERY, "not updating estimate, current is 90%");
+        do_estimate_update = false;
+    }
     if (current.charge_percent != (previous->charge_percent - 10)) {
         LOG(LOG_BATTERY, "not updating estimate, drop is not 10%");
         do_estimate_update = false;
