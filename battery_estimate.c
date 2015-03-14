@@ -2,6 +2,7 @@
 #include "battery_estimate_data.h"
 #include "storage.h"
 #include "logging_helper.h"
+#include "quicksort.h"
 
 static stringbuffer battery_estimate_sb;
 static int          battery_estimate_secs = -1;
@@ -114,10 +115,16 @@ void battery_estimate_update(BatteryChargeState current) {
     if (needspersistence) storage_persist();
 
     unsigned int remaining = be->previous_state.charge_percent / 10;
-    unsigned int sum = 0;
-    for (int i = 0; i < battery_estimate_data_average_data_num; i++) {
-        sum += be->averate_data[i];
-    }
+    
+    // now use a sorted copy of the estimates to take median.
+    time_t to_sort[battery_estimate_data_average_data_num];
+    memcpy(to_sort, be->averate_data, sizeof(time_t) * battery_estimate_data_average_data_num);
+    quicksort(to_sort, 0, battery_estimate_data_average_data_num-1);
+    unsigned int sum = to_sort[battery_estimate_data_average_data_num/2] * battery_estimate_data_average_data_num;;
+    // log battery_estimate sorted data and sum.
+    battery_estimate_data_log(to_sort, battery_estimate_data_average_data_num, LOG_BATTERY);
+    LOG_EXT(LOG_BATTERY, "sum is %d", sum);
+
     unsigned int average;
     if (storage.last_full_timestamp != -1 && remaining <= 9) {
         time_t time_since_last_charge = time(NULL) - storage.last_full_timestamp; 
