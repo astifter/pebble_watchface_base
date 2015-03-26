@@ -20,7 +20,7 @@ static void battery_estimate_update_string(void) {
     if (storage.battery_display & battery_display_estimate) {
         stringbuffer_append_str(&battery_estimate_sb, " | ");
         if (battery_estimate_secs != -1) {
-            stringbuffer_append_ti(&battery_estimate_sb, battery_estimate_secs);
+            stringbuffer_append_ti(&battery_estimate_sb, battery_estimate_secs, time_format_short);
         } else {
             stringbuffer_append(&battery_estimate_sb, "-");
         }
@@ -28,7 +28,7 @@ static void battery_estimate_update_string(void) {
     if (storage.battery_display & battery_display_runtime) {
         stringbuffer_append_str(&battery_estimate_sb, " | ");
         if (storage.last_full_timestamp != -1) {
-            stringbuffer_append_ti(&battery_estimate_sb, time(NULL) - storage.last_full_timestamp);
+            stringbuffer_append_ti(&battery_estimate_sb, time(NULL) - storage.last_full_timestamp, time_format_short);
         } else {
             stringbuffer_append(&battery_estimate_sb, "-");
         }

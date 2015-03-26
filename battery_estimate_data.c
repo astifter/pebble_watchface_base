@@ -13,7 +13,7 @@ void battery_estimate_data_log(time_t* data, size_t size, unsigned int how) {
     for (unsigned int i = 0; i < size; i++) {
         stringbuffer time;
         stringbuffer_init(&time);
-        stringbuffer_append_ti(&time, data[i]);
+        stringbuffer_append_ti(&time, data[i], time_format_full);
         LOG_EXT(how, "storage.battery_estimate.averate_data[%d]: %s", i, time.retval);
     }
 }

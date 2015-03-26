@@ -39,19 +39,29 @@ void stringbuffer_append_fi(stringbuffer* sb, const char* fmt, const int value) 
     stringbuffer_update_counters(sb, new);
 }
 
-void stringbuffer_append_ti(stringbuffer* sb, unsigned int value) {
-    /* unsigned int seconds unused  */ value /= 60;
+void stringbuffer_append_ti(stringbuffer* sb, unsigned int value, time_format tf) {
+    unsigned int seconds = value % 60; value /= 60;
     unsigned int minutes = value % 60; value /= 60;
     unsigned int hours   = value % 24; value /= 24;
     unsigned int days    = value;
 
     if (days == 0 && hours == 0) {
         stringbuffer_append_fi(sb, "%dm", minutes);
+        if (tf == time_format_full) {
+            stringbuffer_append_fi(sb, "%d", seconds);
+        }
     } else if (days == 0) {
         stringbuffer_append_fi(sb, "%dh", hours);
         stringbuffer_append_fi(sb, "%d", minutes);
+        if (tf == time_format_full) {
+            stringbuffer_append_fi(sb, "m%d", seconds);
+        }
     } else {
         stringbuffer_append_fi(sb, "%dd", days);
         stringbuffer_append_fi(sb, "%d", hours);
+        if (tf == time_format_full) {
+            stringbuffer_append_fi(sb, "h%dm", minutes);
+            stringbuffer_append_fi(sb, "%d", seconds);
+        }
     }
 }
