@@ -4,13 +4,13 @@
 #include "stringbuffer.h"
 
 // Indices to storage and data to access copies of stored values.
-enum {
+typedef enum storage_id_e {
     SELECTED_VERSION = 0x0,
     BATTERY_ESTIMATE = 0x10001,
     LAST_FULL_TIMESTAMP = 0x10002,
     BATTERY_DISPLAY = 0x10003,
     MAXIMUM_EVER_USED = 0x10003,
-};
+} storage_id;
 storage_t storage;
 
 static void app_log_storage_log(unsigned int how) {

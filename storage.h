@@ -3,11 +3,11 @@
 #include <pebble.h>
 #include "battery_estimate_data.h"
 
-enum battery_display_mask {
+typedef enum battery_display_mask_e {
     battery_display_level = 0x01,
     battery_display_estimate = 0x02,
     battery_display_runtime = 0x04,
-};
+} battery_display_mask;
 
 // The stored data.
 typedef struct {
