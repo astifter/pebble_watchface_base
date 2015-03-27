@@ -1,7 +1,6 @@
 #include <pebble.h>
 #include "storage.h"
 #include "logging_helper.h"
-#include "stringbuffer.h"
 
 // Indices to storage and data to access copies of stored values.
 typedef enum storage_id_e {
